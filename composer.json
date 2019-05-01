@@ -1,11 +1,11 @@
 {
-    "name": "codebros/laravel-binary-uuid",
+    "name": "bluink/laravel-binary-uuid",
     "description": "Binary support for UUIDs in Laravel",
     "keywords": [
-        "spatie",
+        "bluink",
         "laravel-binary-uuid"
     ],
-    "homepage": "https://github.com/spatie/laravel-binary-uuid",
+    "homepage": "https://github.com/bluinkltd/laravel-binary-uuid",
     "license": "MIT",
     "authors": [
         {

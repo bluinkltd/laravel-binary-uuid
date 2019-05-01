@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-binary-uuid` will be documented in this file
 
+## 1.3.1 - 2019-05-01
+
+- add support for Laravel 5.8
+
 ## 1.3.0 - 2018-09-24
 
 - add eloquent-ness support

@@ -1,15 +1,4 @@
-**THIS PACKAGE IS NOT MAINTAINED ANYMORE**
-
-Alternatives: https://github.com/michaeldyrynda/laravel-efficient-uuid & https://github.com/michaeldyrynda/laravel-model-uuid
-
 # Using optimised binary UUIDs in Laravel
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-binary-uuid.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-binary-uuid)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-binary-uuid/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-binary-uuid)
-[![Code coverage](https://scrutinizer-ci.com/g/spatie/laravel-binary-uuid/badges/coverage.png)](https://scrutinizer-ci.com/g/spatie/laravel-binary-uuid)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-binary-uuid.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-binary-uuid)
-[![StyleCI](https://styleci.io/repos/110949385/shield?branch=master)](https://styleci.io/repos/110949385)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-binary-uuid.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-binary-uuid)
 
 Using a regular uuid as a primary key is guaranteed to be slow.
 
@@ -26,11 +15,11 @@ The package currently only supports MySQL and SQLite.
 You can install the package via Composer:
 
 ```bash
-composer require spatie/laravel-binary-uuid
+composer require bluink/laravel-binary-uuid
 ```
 
 ## Usage
- 
+
 To let a model make use of optimised UUIDs, you must add a `uuid` field as the primary field in the table.
 
 ```php
@@ -63,7 +52,7 @@ class TestModel extends Model
     use HasBinaryUuid;
 
     public $incrementing = false;
-    
+
     public function getKeyName()
     {
         return 'custom_uuid';
@@ -80,15 +69,15 @@ use Spatie\BinaryUuid\HasBinaryUuid;
 class TestModel extends Model
 {
     use HasBinaryUuid;
-    
+
     /**
-     * The suffix for the uuid text attribute 
+     * The suffix for the uuid text attribute
      * by default this is '_text'
-     * 
+     *
      * @var
      */
     protected $uuidSuffix = '_str';
-    
+
     /**
      * The binary UUID attributes that should be converted to text.
      *
@@ -110,7 +99,7 @@ Laravel currently does not allow adding new blueprint methods which can be used 
 Because of this, we decided to override the `uuid` behaviour which will create a `BINARY` column instead of a `CHAR(36)` column.
 
 There are some cases in which Laravel's generated code will also use `uuid`, but does not support our binary implementation.
-An example are database notifications. 
+An example are database notifications.
 To make those work, you'll have to change the migration of those notifications to use `CHAR(36)`.
 
 ```php
@@ -126,7 +115,7 @@ The UUID of a model will automatically be generated upon save.
 ```php
 $model = MyModel::create();
 
-dump($model->uuid); // b"\x11þ╩ÓB#(ªë\x1FîàÉ\x1EÝ." 
+dump($model->uuid); // b"\x11þ╩ÓB#(ªë\x1FîàÉ\x1EÝ."
 ```
 
 ### Getting a human-readable UUID
@@ -136,7 +125,7 @@ UUIDs are only stored as binary in the database. You can however use a textual v
 ```php
 $model = MyModel::create();
 
-dump($model->uuid_text); // "6dae40fa-cae0-11e7-80b6-8c85901eed2e" 
+dump($model->uuid_text); // "6dae40fa-cae0-11e7-80b6-8c85901eed2e"
 ```
 
 If you want to set a specific UUID before creating a model, that's also possible.
@@ -159,7 +148,7 @@ The most optimal way to query the database:
 $uuid = 'ff8683dc-cadd-11e7-9547-8c85901eed2e'; // UUID from eg. the URL.
 
 $model = MyModel::withUuid($uuid)->first();
-``` 
+```
 
 The `withUuid` scope will automatically encode the UUID string to query the database.
 The manual approach would be something like this.
@@ -182,7 +171,7 @@ Note: Version 1.3.0 added simplified syntax for finding data using a uuid string
 ```php
 $uuid = 'ff8683dc-cadd-11e7-9547-8c85901eed2e'; // UUID from eg. the URL.
 
-$model = MyModel::find($uuid);  
+$model = MyModel::find($uuid);
 
 $model = MyModel::findOrFail($uuid);
 ```
@@ -196,7 +185,7 @@ $uuids = [
 ];
 
 $model = MyModel::findMany($uuids);
-``` 
+```
 
 #### Querying relations
 
@@ -213,7 +202,7 @@ $models = MyModel::withUuid([
 
 ## Running the benchmarks
 
-The package contains benchmarks that prove storing uuids in a tweaked binary form is really more performant. 
+The package contains benchmarks that prove storing uuids in a tweaked binary form is really more performant.
 
 Before running the tests you should set up a MySQL database and specify the connection configuration in `phpunit.xml.dist`.
 
@@ -245,33 +234,10 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
-
-## Postcardware
-
-You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
-
 ## Credits
 
 - [Brent Roose](https://github.com/brendt)
 - [All Contributors](../../contributors)
-
-## Support us
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
 
